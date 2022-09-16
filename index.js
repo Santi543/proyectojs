@@ -9,7 +9,7 @@ alert(`Bienvenido, ${user[0]}.\n\nSi desea ver nuestros productos haga click en 
 
 const multiplicar = (cantidad, precio) => cantidad * precio
 
-const cartProduct = []
+let cartProduct = []
 
 let precioFinal = 0
 cartProduct.forEach(producto => {
@@ -24,22 +24,27 @@ const actContador = () => {
     cart.textContent = contador;
 }
 
-const shoppingButtons = document.getElementsByClassName(`icon-shopping-cart`)
-console.log(shoppingButtons)
-for (var i = 0; i < shoppingButtons.length; i++) {
-    shoppingButtons[i].addEventListener('click', (e) => {
-        comprarProducto(Number(e.target.id))
-        console.log(e.target.id)
-        contador++
-        actContador();
-    });
-}
-
 const caseFunction = (nameProduct, cantidad, total) => {
     alert(`Usted ha seleccionado ${cantidad} ${nameProduct} \n Total: $${total}`);
     cartProduct.push({ cantidad: cantidad, producto: nameProduct, total: total })
     console.log(cartProduct)
 }
+
+const addNew = (nameProduct) => {
+
+const newCart = cartProduct.map((item) => {
+    if(nameProduct == item.nameProduct){
+        return {...item , cantidad: item.cantidad + 1}
+    } else {
+        return item;
+    }
+})
+    if (!cartProduct.find((item) => item.nameProduct == nameProduct)){
+    newCart.push({ cantidad: cantidad, producto: nameProduct, total: total })
+    }
+    return newCart;
+}
+
 
 
 
@@ -51,8 +56,7 @@ const comprarProducto = (selectProduct) => {
     switch (selectProduct) {
 
         case 1:
-            total = multiplicar(cantidad, 350);
-            caseFunction("HAUTEVILLE CONCRETE ROCKING CHAIR", cantidad, total);
+            cartProduct = addNew(`HAUTEVILLE CONCRETE ROCKING CHAIR`);
             break;
         case 2:
             total = multiplicar(cantidad, 600);
@@ -92,6 +96,17 @@ const comprarProducto = (selectProduct) => {
     localStorage.setItem(`precioFinal`, precioFinal)
     console.log(localStorage.getItem(`precioFinal`))
     alert(`Su monto total es de: $${precioFinal}`);
+}
+
+const shoppingButtons = document.getElementsByClassName(`icon-shopping-cart`)
+console.log(shoppingButtons)
+for (var i = 0; i < shoppingButtons.length; i++) {
+    shoppingButtons[i].addEventListener('click', (e) => {
+        comprarProducto(Number(e.target.id))
+        console.log(e.target.id)
+        contador++
+        actContador();
+    });
 }
 
 const sinIntereses = (total, selectCuotas) => {
