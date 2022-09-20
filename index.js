@@ -1,11 +1,11 @@
-let userName;
+/* let userName;
 do {
     userName = prompt(`Ingrese su mail, por favor`);
 } while (!userName || !userName.includes(`@`));
 
 const user = userName.split(`@`);
 
-alert(`Bienvenido, ${user[0]}.\n\nSi desea ver nuestros productos haga click en "ELEGIR PRODUCTOS".`);
+alert(`Bienvenido, ${user[0]}.\n\nSi desea ver nuestros productos haga click en "ELEGIR PRODUCTOS".`); */
 
 const multiplicar = (cantidad, precio) => cantidad * precio
 
@@ -30,7 +30,7 @@ const caseFunction = (nameProduct, cantidad, total) => {
     console.log(cartProduct)
 }
 
-const addNew = (nameProduct) => {
+const addNew = (nameProduct, total) => {
 
 const newCart = cartProduct.map((item) => {
     if(nameProduct == item.nameProduct){
@@ -40,7 +40,7 @@ const newCart = cartProduct.map((item) => {
     }
 })
     if (!cartProduct.find((item) => item.nameProduct == nameProduct)){
-    newCart.push({ cantidad: cantidad, producto: nameProduct, total: total })
+    newCart.push({ cantidad: 1, nameProduct: nameProduct, total: total })
     }
     return newCart;
 }
@@ -50,45 +50,35 @@ const newCart = cartProduct.map((item) => {
 
 const comprarProducto = (selectProduct) => {
 
-    const cantidad = 1
-    let total;
-
     switch (selectProduct) {
 
         case 1:
-            cartProduct = addNew(`HAUTEVILLE CONCRETE ROCKING CHAIR`);
+            cartProduct = addNew(`HAUTEVILLE CONCRETE ROCKING CHAIR`, 350);
+            console.log(cartProduct)
             break;
         case 2:
-            total = multiplicar(cantidad, 600);
-            caseFunction("PAVILION SPEAKER", cantidad, total);
+            cartProduct = addNew("PAVILION SPEAKER", 600);
             break;
         case 3:
-            total = multiplicar(cantidad, 780);
-            caseFunction("LIGOMANCER", cantidad, total);
+            cartProduct = addNew("LIGOMANCER", 780);
             break;
         case 4:
-            total = multiplicar(cantidad, 800);
-            caseFunction("ALATO CABINET", cantidad, total);
+            cartProduct = addNew("ALATO CABINET", 800);
             break;
         case 5:
-            total = multiplicar(cantidad, 100);
-            caseFunction("EARING WIRELESS", cantidad, total);
+            cartProduct = addNew("EARING WIRELESS", 100);
             break;
         case 6:
-            total = multiplicar(cantidad, 960);
-            caseFunction("SCUPTURAL COFFEE TABLE", cantidad, total);
+            cartProduct = addNew("SCUPTURAL COFFEE TABLE", 960);
             break;
         case 7:
-            total = multiplicar(cantidad, 540);
-            caseFunction("THE WW CHAIR", cantidad, total);
+            cartProduct = addNew("THE WW CHAIR", 540);
             break;
         case 8:
-            total = multiplicar(cantidad, 55);
-            caseFunction("HIMITSU MONEY BOX", cantidad, total);
+            cartProduct = addNew("HIMITSU MONEY BOX", 55);
             break;
         case 9:
-            total = multiplicar(cantidad, 99);
-            caseFunction("ARIANE PRIN", cantidad, total);
+            cartProduct = addNew("ARIANE PRIN", 99);
             break;
     }
     let precioFinal = 0
@@ -98,7 +88,7 @@ const comprarProducto = (selectProduct) => {
     alert(`Su monto total es de: $${precioFinal}`);
 }
 
-const shoppingButtons = document.getElementsByClassName(`icon-shopping-cart`)
+const shoppingButtons = document.getElementsByClassName(`shoppingButtons`)
 console.log(shoppingButtons)
 for (var i = 0; i < shoppingButtons.length; i++) {
     shoppingButtons[i].addEventListener('click', (e) => {
@@ -107,12 +97,4 @@ for (var i = 0; i < shoppingButtons.length; i++) {
         contador++
         actContador();
     });
-}
-
-const sinIntereses = (total, selectCuotas) => {
-    alert(`Usted va realizar ${selectCuotas} pagos de $${(total / selectCuotas).toFixed()}`);
-}
-
-const intereses = (total, selectCuotas) => {
-    alert(`Usted va a realizar ${selectCuotas} pagos de $${(total / selectCuotas * 0, 5 + total / selectCuotas).toFixed()}`)
 }
