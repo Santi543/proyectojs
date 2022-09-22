@@ -64,6 +64,66 @@
 	</head>
 	<body>
 		
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Registrese</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-bottom: 50px;">
+						<span aria-hidden="true" style="font-size: 30px;">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					  </div>
+					  <div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					  </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="register">REGISTRARSE</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">LOGIN</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-bottom: 50px;">
+						<span aria-hidden="true" style="font-size: 30px;">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter email">
+						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					  </div>
+					  <div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+					  </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="login">LOGIN</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<div class="fh5co-loader"></div>
 	
 	<div id="page">
@@ -105,6 +165,11 @@
 						    </div>
 						</li>
 						<li class="shopping-cart"><a href="#" class="cart"><span><small id="cart">0</small><i class="icon-shopping-cart icon"></i></span></a></li>
+						<img src="../images/logo-login.png" alt="" class="logo-login" data-toggle="modal" data-target="#exampleModalCenter2">
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#exampleModalCenter">
+								REGISTRESE
+							</button>
 					</ul>
 				</div>
 			</div>
