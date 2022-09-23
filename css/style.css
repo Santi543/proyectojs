@@ -131,7 +131,7 @@ figure {
 
 .fh5co-nav .menu-2 li.search {
   float: left;
-  width: 83%;
+  width: 60%;
   font-family: "Playfair Display", serif;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
@@ -141,12 +141,13 @@ figure {
 }
 
 .fh5co-nav .menu-2 li input[type=text] {
-  padding: 6px 10px;
+  padding: 4px 0px;
   width: 40%;
   border: none;
   float: right;
   font-size: 13px;
   margin-top: 4px;
+  margin-right: 10px;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
@@ -1982,7 +1983,7 @@ figure {
 }
 
 .fh5co-nav .menu-2 li.search {
-  width: 75%;
+  width: 53%;
 }
 
 .modal-header {
@@ -2035,5 +2036,57 @@ figure {
   white-space: normal;
   white-space: normal;
 }
+
+.menuNav{
+  width: 35%;
+}
+
+.containerLogo{
+  width: 40%;
+}
+
+.containerFather{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 100%;
+}
+
+#btnRegisterNav{
+  width: 100px;
+  white-space: normal;
+  font-size: 13px;
+  padding: 1px 8px;
+}
+
+.input-group{
+  width: 60%;
+}
+
+.inputSearch{
+  margin-right: 15px;
+  padding: 0;
+}
+
+.row{
+  width: 100%;
+}
+
+.search{
+  width: 50%;
+}
+
+.buttonDlt{
+  height: 10px;
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+/* .contModalCart{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} */
 
 /*# sourceMappingURL=style.css.map */
