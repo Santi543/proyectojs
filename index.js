@@ -15,7 +15,7 @@ const addToNav = () => {
     if (userNav) {
         console.log(userNav)
         console.log(userNav.mail.split(`@`))
-        document.getElementById(`userName`).innerHTML = `<p> ${userNav.mail.split(`@`)[0]} </p>`
+        document.getElementById(`userName`).innerHTML = `<p class="userNameNav"> ${userNav.mail.split(`@`)[0]} </p>`
 
     }
 }
@@ -37,15 +37,23 @@ const registerNav = document.getElementById(`btnRegisterNav`)
 
 const goRegister = document.getElementById(`goToRegister`)
 
+const deleteCart = (idProduct) => {
+    const storageCart = JSON.parse(localStorage.getItem(`cart`))
+    let cartDltAct = storageCart.filter(product => product.nameProduct != idProduct)
+    cartDltAct = localStorage.setItem(`cart`, JSON.stringify(cartDltAct))
+    document.getElementById(idProduct).remove()
+}
+
 goRegister.addEventListener(`click`, (e) => {
     $('#exampleModalCenter2').modal('hide')
 })
 
 const addToModal = () => {
     let modalVar = ``
-    cartProduct.map((product) => {
+    const products = JSON.parse(localStorage.getItem(`cart`))
+    products.map((product) => {
         modalVar = `${modalVar}
-        <div class="containerProduct">
+        <div class="containerProduct" id="${product.nameProduct}">
          <img src= "./images/${product.imagen}" class="modalVar">
             <div class= "contModalCart">
                 <p class="textModal"> ${product.nameProduct}    x ${product.cantidad}
@@ -57,16 +65,21 @@ const addToModal = () => {
         </div>`
     })
     document.getElementById(`modalCartImg`).innerHTML = modalVar
-}
-
-const btnDlt = document.getElementsByClassName(`buttonDlt`)
-console.log(btnDlt)
-if (btnDlt.length > 0){
-btnDlt?.map((product) => {
-    product.addEventListener(`click`, (e) =>{
-        console.log(e.id)
-    })
-})
+    const btnDlt = document.getElementsByClassName(`buttonDlt`)
+    console.log(`holacomoestas`, btnDlt.length)
+    for (var i = 0; i < btnDlt.length; i++) {
+        console.log("tag", btnDlt[i])
+        btnDlt[i].addEventListener("click", (e) => {
+            const quantity = JSON.parse(localStorage.getItem(`cart`)).find(product => product.nameProduct == e.target.parentElement.id).cantidad
+            deleteCart(e.target.parentElement.id)
+            contador = contador - quantity
+            actContador();
+            let precioFinal = 0;
+            JSON.parse(localStorage.getItem(`cart`)).forEach((producto) => { precioFinal = precioFinal + producto.total });
+            localStorage.setItem(`precioFinal`, precioFinal);
+        })
+    }
+    console.log("botondelete", btnDlt)
 }
 
 
@@ -97,11 +110,6 @@ let cartProduct = []
 
 cartProduct = localStorage.getItem(`cart`) ? JSON.parse(localStorage.getItem(`cart`)) : []
 
-let precioFinal = 0
-cartProduct.forEach(producto => {
-    precioFinal = precioFinal + producto.total
-});
-
 let contador = 0;
 
 const cart = document.getElementById(`cart`)
@@ -109,31 +117,6 @@ const cart = document.getElementById(`cart`)
 const actContador = () => {
     cart.textContent = contador;
 }
-
-const addNew = (nameProduct, total, imagen, id) => {
-    if (localStorage.getItem(`token`) == `ariziochan`) {
-        let newCart = []
-        if (cartProduct.length > 0) {
-           newCart = cartProduct.map((item) => {
-                if (nameProduct == item.nameProduct) {
-                    return { ...item, cantidad: item.cantidad + 1, total: item.total + total }
-                } else {
-                    return item;
-                }
-
-            })
-        }
-        if (!cartProduct.find((item) => item.nameProduct == nameProduct)) {
-            newCart.push({ cantidad: 1, nameProduct: nameProduct, total: total, imagen: imagen, id: id })
-        }
-        localStorage.setItem(`cart`, JSON.stringify(newCart))
-        return newCart;
-    } else {
-        $('#exampleModalCenter2').modal({ show: true });
-    }
-}
-
-
 
 
 const comprarProducto = (selectProduct) => {
@@ -168,10 +151,10 @@ const comprarProducto = (selectProduct) => {
             cartProduct = addNew("ARIANE PRIN", 99, "product-9.jpg", 9);
             break;
     }
-    let precioFinal = 0
-    cartProduct.forEach(producto => { precioFinal = precioFinal + producto.total });
-    localStorage.setItem(`precioFinal`, precioFinal)
-    console.log(localStorage.getItem(`precioFinal`))
+    let precioFinal = 0;
+    JSON.parse(localStorage.getItem(`cart`)).forEach((producto) => { precioFinal = precioFinal + producto.total });
+    localStorage.setItem(`precioFinal`, precioFinal);
+    console.log(localStorage.getItem(`precioFinal`));
     alert(`Su monto total es de: $${precioFinal}`);
 }
 
@@ -186,3 +169,27 @@ for (var i = 0; i < shoppingButtons.length; i++) {
         actContador();
     });
 }
+
+const addNew = (nameProduct, total, imagen, id) => {
+    if (localStorage.getItem(`token`) == `ariziochan`) {
+        let newCart = []
+        if (cartProduct.length > 0) {
+            newCart = cartProduct.map((item) => {
+                if (nameProduct == item.nameProduct) {
+                    return { ...item, cantidad: item.cantidad + 1, total: item.total + total}
+                } else {
+                    return item;
+                }
+
+            })
+        }
+        if (!cartProduct.find((item) => item.nameProduct == nameProduct)) {
+            newCart.push({ cantidad: 1, nameProduct: nameProduct, total: total, imagen: imagen, id: id })
+        }
+        localStorage.setItem(`cart`, JSON.stringify(newCart))
+        return newCart;
+    } else {
+        $('#exampleModalCenter2').modal({ show: true });
+    }
+}
+

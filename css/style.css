@@ -2083,6 +2083,10 @@ figure {
   margin-bottom: 10px;
 }
 
+.userNameNav{
+  width: 30px;
+}
+
 /* .contModalCart{
   display: flex;
   flex-direction: column;
