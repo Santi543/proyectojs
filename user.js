@@ -21,7 +21,7 @@ register.addEventListener(`click`, () => {
     }
 })
 
-login.addEventListener(`click`, (e) => {
+login.addEventListener(`click`, () => {
     let loginObj = localStorage.getItem(`Users`);
     loginObj = JSON.parse(loginObj);
     if ((loginObj.mail == loginInput.value) && (loginObj.password == loginPass.value)) {

@@ -46,7 +46,7 @@ const deleteCart = (idProduct) => {
 const addToModal = () => {
     let modalVar = ``
     const products = JSON.parse(localStorage.getItem(`cart`))
-    products.map((product) => {
+    products?.map((product) => {
         modalVar = `${modalVar}
         <div class="containerProduct" id="${product.nameProduct}">
          <img src= "./images/${product.imagen}" class="modalVar">
@@ -99,15 +99,19 @@ const comprarProducto = (selectProduct) => {
 
         case 1:
             cartProduct = addNew(`HAUTEVILLE CONCRETE ROCKING CHAIR`, 350, "product-1.jpg", 1);
+            desestructura(`HAUTEVILLE CONCRETE ROCKING CHAIR`);
             break;
         case 2:
             cartProduct = addNew("PAVILION SPEAKER", 600, "product-2.jpg", 2);
+            desestructura("PAVILION SPEAKER");
             break;
         case 3:
             cartProduct = addNew("LIGOMANCER", 780, "product-3.jpg", 3);
+            desestructura();
             break;
         case 4:
             cartProduct = addNew("ALATO CABINET", 800, "product-4.jpg", 4);
+            desestructura();
             break;
         case 5:
             cartProduct = addNew("EARING WIRELESS", 100, "product-5.jpg", 5);
@@ -126,10 +130,32 @@ const comprarProducto = (selectProduct) => {
             break;
     }
     let precioFinal = 0;
-    JSON.parse(localStorage.getItem(`cart`)).forEach((producto) => { precioFinal = precioFinal + producto.total });
+    JSON.parse(localStorage.getItem(`cart`))?.forEach((producto) => { precioFinal = precioFinal + producto.total });
     localStorage.setItem(`precioFinal`, precioFinal);
     alert(`Su monto total es de: $${precioFinal}`);
 }
 
 
 // /// //
+
+// DESESTRUCTURACION PARA DESAFIO //
+
+
+const desestructura = () => {
+    let cartProduct = [];
+    cartProduct = JSON.parse(localStorage.getItem(`cart`));
+    const [a] = cartProduct
+    const {total} = a;
+    console.log(total);
+}
+
+
+
+/* const desestructura = (nameProduct) => {
+    let cartProduct = [];
+    cartProduct = JSON.parse(localStorage.getItem(`cart`));
+    let producto = cartProduct?.find((product) => nameProduct = product.nameProduct);
+    const {total} = producto;
+    console.log(total);
+} */
+
