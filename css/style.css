@@ -1975,13 +1975,6 @@ figure {
   opacity: 0;
 }
 
-.logo-login {
-  width: 25px;
-  height: 20px;
-  padding: 2px;
-  cursor: pointer;
-}
-
 .fh5co-nav .menu-2 li.search {
   width: 53%;
 }
@@ -2085,6 +2078,43 @@ figure {
 
 .userNameNav{
   width: 30px;
+}
+
+.logo-login{
+  width: 80px;
+  white-space: normal;
+  font-size: 13px;
+  padding: 1px 8px;
+  height: 30px;
+}
+
+#errorForModal{
+  color: red;
+}
+
+.toastify{
+  box-shadow: 0 3px 6px -1px rgb(0 0 0 / 12%), 0 10px 36px -4px rgb(226 255 218 / 30%);
+  padding: 8px 25px;
+}
+
+.logoUser{
+  width: 20px;
+  height: 20px;
+}
+
+.changeButtonLogin{
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  justify-content: center;
+  margin-right: 100px;
+}
+
+.textNav{
+  width: 363px;
+  margin-right: 20px;
+  font-size: 13px;
+  color: #000;
 }
 
 /* .contModalCart{

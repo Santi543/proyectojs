@@ -39,6 +39,7 @@
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
 
 	<!-- Theme style  -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 	<link rel="stylesheet" href="css/style.css">
 
 	<!-- Modernizr JS -->
@@ -54,22 +55,22 @@
 
 	<div class="modal" tabindex="-1" role="dialog" id="modalCart">
 		<div class="modal-dialog" role="document">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <h5 class="modal-title">TU CARRITO</h5>
-			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">TU CARRITO</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modalCartImg">
+					<p>Aun no tienes ningun producto en el carrito.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
 			</div>
-			<div class="modal-body" id="modalCartImg">
-			  <p>Aun no tienes ningun producto en el carrito.</p>
-			</div>
-			<div class="modal-footer">
-			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		  </div>
 		</div>
-	  </div>
+	</div>
 
 
 	<!-- Modal -->
@@ -79,20 +80,23 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">Registrese</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-bottom: 50px;">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+						style="margin-bottom: 50px;">
 						<span aria-hidden="true" style="font-size: 30px;">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email address</label>
-						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-					  </div>
-					  <div class="form-group">
+						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+							placeholder="Enter email">
+						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+							else.</small>
+					</div>
+					<div class="form-group">
 						<label for="exampleInputPassword1">Password</label>
 						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-					  </div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -109,24 +113,29 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">LOGIN</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-bottom: 50px;">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+						style="margin-bottom: 50px;">
 						<span aria-hidden="true" style="font-size: 30px;">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
+						<div id="errorForModal"></div>
 						<label for="exampleInputEmail1">Email address</label>
-						<input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter email">
-						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-					  </div>
-					  <div class="form-group">
+						<input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp"
+							placeholder="Enter email">
+						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+							else.</small>
+					</div>
+					<div class="form-group">
 						<label for="exampleInputPassword1">Password</label>
 						<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
-					  </div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<p class="modalP">No tenes una cuenta? Creala clickeando acá</p>
-					<button type="button" class="btn btn-primary btnModal" data-toggle="modal" data-target="#exampleModalCenter" id="goToRegister"> REGISTRESE AQUI</button>
+					<button type="button" class="btn btn-primary btnModal" data-toggle="modal"
+						data-target="#exampleModalCenter" id="goToRegister"> REGISTRESE AQUI</button>
 					<button type="button" class="btn btn-secondary btnModal" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary btnModal" id="login">LOGIN</button>
 				</div>
@@ -175,11 +184,15 @@
 									</span>
 								</div>
 							</li>
-							<li class="shopping-cart" data-toggle="modal" data-target= "#modalCart" id="cartImg"><a href="#" class="cart"><span><small id="cart">0</small><i
+							<li class="shopping-cart" data-toggle="modal" data-target="#modalCart" id="cartImg"><a
+									href="#" class="cart"><span><small id="cart">0</small><i
 											class="icon-shopping-cart"></i></span></a></li>
-							<img src="images/logo-login.png" alt="" class="logo-login" data-toggle="modal" data-target="#exampleModalCenter2">
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="btnRegisterNav">REGISTRESE</button>
-							<div id="userName"></div>
+							<div id="changeButtonLogin">
+								<button type="button" class="btn btn-secondary logo-login" data-toggle="modal"
+									data-target="#exampleModalCenter2" id="loginNavButton">LOGIN</button>
+							</div>
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#exampleModalCenter" id="btnRegisterNav">REGISTRESE</button>
 						</ul>
 					</div>
 				</div>
@@ -641,6 +654,8 @@
 	<script src="js/main.js"></script>
 	<script src="cart.js"></script>
 	<script src="user.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 
 </html>

@@ -9,6 +9,7 @@ let cartProduct = [];
 const cart = document.getElementById(`cart`)
 const cartImg = document.getElementById(`cartImg`);
 const shoppingButtons = document.getElementsByClassName(`shoppingButtons`);
+const confirmModal = document.getElementsByClassName('swal2-confirm');
 // /// //
 
 cartImg.addEventListener(`click`, () => {
@@ -63,10 +64,27 @@ const addToModal = () => {
     const btnDlt = document.getElementsByClassName(`buttonDlt`);
     for (var i = 0; i < btnDlt.length; i++) {
         btnDlt[i].addEventListener("click", (e) => {
-            deleteCart(e.target.parentElement.id);
-            let precioFinal = 0;
-            JSON.parse(localStorage.getItem(`cart`)).forEach((producto) => { precioFinal = precioFinal + producto.total });
-            localStorage.setItem(`precioFinal`, precioFinal);
+            Swal.fire({
+                title: 'Está seguro que desea borrar este producto de su carrito de compras?',
+                text: "No puedes retornar esta accion",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, deseo borrarlo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Borrado!',
+                        'El producto se elimino de tu carrito',
+                        'success'
+                    )
+                    deleteCart(e.target.parentElement.id);
+                    let precioFinal = 0;
+                    JSON.parse(localStorage.getItem(`cart`)).forEach((producto) => { precioFinal = precioFinal + producto.total });
+                    localStorage.setItem(`precioFinal`, precioFinal);
+                }
+            })
         })
     }
 }
@@ -132,7 +150,19 @@ const comprarProducto = (selectProduct) => {
     let precioFinal = 0;
     JSON.parse(localStorage.getItem(`cart`))?.forEach((producto) => { precioFinal = precioFinal + producto.total });
     localStorage.setItem(`precioFinal`, precioFinal);
-    alert(`Su monto total es de: $${precioFinal}`);
+    Toastify({
+        text: "Producto agregado al carrito ✔",
+        duration: 2000,
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "white",
+            color: "#8eb98e",
+        },
+    }).showToast();
 }
 
 
@@ -145,7 +175,7 @@ const desestructura = () => {
     let cartProduct = [];
     cartProduct = JSON.parse(localStorage.getItem(`cart`));
     const [a] = cartProduct
-    const {total} = a;
+    const { total } = a;
     console.log(total);
 }
 
