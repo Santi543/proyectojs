@@ -166,6 +166,28 @@ const comprarProducto = (selectProduct) => {
 }
 
 
+
+let objectJSON;
+let numberRandom = Math.floor(Math.random() * 19) + 1;
+
+
+
+fetch(`https://fakestoreapi.com/products/${numberRandom}`)
+    .then(resp => resp.json())
+    .then(json => {
+        const { title, price, image } = json
+        const divAdvertising = `
+        <div class= "productAd">
+        <h2>${title}</h2>
+        <img src="${image}"/>
+        <p> ${price}</p> 
+        </div>
+        `
+
+        document.getElementById('advertising').innerHTML = divAdvertising
+    })
+
+
 // /// //
 
 // DESESTRUCTURACION PARA DESAFIO //

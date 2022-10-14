@@ -2117,6 +2117,15 @@ figure {
   color: #000;
 }
 
+#advertising img{
+  width: 250px;
+}
+
+#advertising{
+  justify-items: center;
+  align-items: center;
+}
+
 /* .contModalCart{
   display: flex;
   flex-direction: column;
