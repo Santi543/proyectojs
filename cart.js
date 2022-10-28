@@ -10,6 +10,8 @@ const cart = document.getElementById(`cart`)
 const cartImg = document.getElementById(`cartImg`);
 const shoppingButtons = document.getElementsByClassName(`shoppingButtons`);
 const confirmModal = document.getElementsByClassName('swal2-confirm');
+const downCounter = document.getElementById('down');
+const upCounter = document.getElementById('up');
 // /// //
 
 cartImg.addEventListener(`click`, () => {
@@ -44,16 +46,32 @@ const deleteCart = (idProduct) => {
     updateCartCounter();
 }
 
+const totalCartFunction = () =>{
+    let headerCart = ``;
+    let precioFinal = JSON.parse(localStorage.getItem('precioFinal'));
+    headerCart = `<h4>TU CARRITO</h4>
+                     <p class="totalCart"> Total: $${precioFinal}</p>`
+    document.getElementById('headerCart').innerHTML = headerCart;
+}
+
 const addToModal = () => {
-    let modalVar = ``
-    const products = JSON.parse(localStorage.getItem(`cart`))
+    totalCartFunction();
+    let modalVar = ``;
+    const products = JSON.parse(localStorage.getItem(`cart`));
     products?.map((product) => {
         modalVar = `${modalVar}
         <div class="containerProduct" id="${product.nameProduct}">
          <img src= "./images/${product.imagen}" class="modalVar">
             <div class= "contModalCart">
-                <p class="textModal"> ${product.nameProduct}    x ${product.cantidad}
+                <p class="textModal"> ${product.nameProduct}
                 </p>
+                    <div class="secondContainerRow">
+                        <p class="amountProducts">Cantidad: ${product.cantidad}</p>
+                        <div class= "rowImgsCounter">
+                            <img src= "./images/signomenos.png" class="imgCounter" id="down">
+                            <img src= "./images/signo-suma2.png" class="imgCounter" id="up">
+                        </div>
+                    </div>
             </div>
                 <button type="button" class="close buttonDlt" id="${product.nameProduct}">
 				<span>&times;</span>
@@ -76,13 +94,14 @@ const addToModal = () => {
                 if (result.isConfirmed) {
                     Swal.fire(
                         'Borrado!',
-                        'El producto se elimino de tu carrito',
+                        'El producto se eliminó de tu carrito',
                         'success'
                     )
                     deleteCart(e.target.parentElement.id);
                     let precioFinal = 0;
                     JSON.parse(localStorage.getItem(`cart`)).forEach((producto) => { precioFinal = precioFinal + producto.total });
                     localStorage.setItem(`precioFinal`, precioFinal);
+                    totalCartFunction()
                 }
             })
         })
