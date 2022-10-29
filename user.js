@@ -52,8 +52,9 @@ login.addEventListener(`click`, () => {
         })
         localStorage.setItem(`token`, `ariziochan`);
         $('#exampleModalCenter2').modal('hide');
+        addToNav();
     } else {
-        const textErrorUser = "<p class='errorModal'>Cuenta o contraseña incorrectas</p>"
+        let textErrorUser = "<p class='errorModal'>Cuenta o contraseña incorrectas</p>"
         document.getElementById(`errorForModal`).innerHTML = textErrorUser;
     }
 })
@@ -67,9 +68,11 @@ const addToNav = () => {
     if (localStorage.getItem('token')) {
         const user = JSON.parse(localStorage.getItem('Users'));
         const navVar = `<div class="containerForUser"><img class='logoUser' src='images/userNav.png'/>  <p class="textNav"> ${user.mail.split('@')[0].toUpperCase()} </p></div>`;
-        console.log(navVar);
-        navVar ? document.getElementById(`changeButtonLogin`).innerHTML = navVar : null
+        console.log("navbar:",navVar);
+        newBtnLogin.innerHTML = navVar 
     }
 }
+addToNav()
 
-addToNav();
+
+

@@ -4,18 +4,89 @@
 let cartProduct = [];
 // /// //
 
+
 // CAPTURO BOTONES DEL HTML //
 
 const cart = document.getElementById(`cart`)
 const cartImg = document.getElementById(`cartImg`);
 const shoppingButtons = document.getElementsByClassName(`shoppingButtons`);
 const confirmModal = document.getElementsByClassName('swal2-confirm');
-const downCounter = document.getElementById('down');
-const upCounter = document.getElementById('up');
+const downCounter = document.getElementsByClassName('imgCounterMin');
+const upCounter = document.getElementsByClassName('imgCounter');
+const divHeaderModal = document.getElementById('headerCart');
 // /// //
 
+const buttonsQuantity = () => {
+    console.log(downCounter)
+    if (downCounter != null || upCounter != null) {
+        for (var i = 0; i < downCounter.length; i++) {
+            downCounter[i].addEventListener('click', (e) => {
+                const cartForButtons = JSON.parse(localStorage.getItem('cart'));
+                console.log("cartForButtons:",cartForButtons)
+                const newCart = updateProductQuantity(e, "substraction", cartForButtons);
+                updateCartQuantityAndPrice(newCart)
+                console.log("newCart:",newCart)
+                localStorage.setItem('cart', JSON.stringify(newCart))
+                
+            });
+        }
+        for (var i = 0; i < upCounter.length; i++) {
+            upCounter[i].addEventListener('click', (e) => {
+                const cartForButtons = JSON.parse(localStorage.getItem('cart'));
+                console.log("cartForButtons:",cartForButtons)
+                const newCart = updateProductQuantity(e, "addition", cartForButtons);
+                updateCartQuantityAndPrice(newCart)
+                console.log("newCart:",newCart)
+                localStorage.setItem('cart', JSON.stringify(newCart))
+             
+            });
+        }
+    }
+}
+
+const updateProductQuantity = (event, type, cart) => {
+    let newCart = [];
+    let producto = cart.find((item) => item.id == event.target.id)
+    console.log("Producto", producto)
+    if (type == "substraction"){
+        producto.cantidad = producto.cantidad - 1
+       producto.total = producto.precioUnitario * producto.cantidad
+       const cantidadDiv = document.getElementById(`cantidad-${producto.id}`)
+       cantidadDiv.innerText = `Cantidad: ${producto.cantidad}`
+    } else if (type == "addition") {
+        producto.cantidad = producto.cantidad + 1
+        producto.total = producto.precioUnitario * producto.cantidad
+        const cantidadDiv = document.getElementById(`cantidad-${producto.id}`)
+        cantidadDiv.innerText = `Cantidad: ${producto.cantidad}`
+    }
+    const otherProductos = cart.filter((item) => item.id != event.target.id)
+    if (producto.cantidad === 0) {
+        const productToDelete = document.getElementById(producto.nameProduct)
+        productToDelete.remove()
+        newCart = [...otherProductos]
+    } else {
+        newCart = [...otherProductos, producto]
+    }
+    return newCart;
+}
+
+const updateCartQuantityAndPrice = (newCart) => {
+    let productsQuantity = 0;
+    let finalPrice = 0;
+    newCart.forEach(product => {
+        productsQuantity = product.cantidad + productsQuantity;
+        finalPrice = product?.total + finalPrice;
+    });
+    cart.textContent = productsQuantity;
+    localStorage.setItem('precioFinal', finalPrice)
+    totalCartFunction();
+}
+
+
+
 cartImg.addEventListener(`click`, () => {
-    addToModal()
+    addToModal();
+    buttonsQuantity();
 })
 
 for (var i = 0; i < shoppingButtons.length; i++) {
@@ -46,11 +117,14 @@ const deleteCart = (idProduct) => {
     updateCartCounter();
 }
 
-const totalCartFunction = () =>{
+
+
+
+const totalCartFunction = () => {
+    let finalPriceGlobal = JSON.parse(localStorage.getItem('precioFinal')) || 0;
     let headerCart = ``;
-    let precioFinal = JSON.parse(localStorage.getItem('precioFinal'));
     headerCart = `<h4>TU CARRITO</h4>
-                     <p class="totalCart"> Total: $${precioFinal}</p>`
+                     <p class="totalCart"> Total: $${finalPriceGlobal}</p>`
     document.getElementById('headerCart').innerHTML = headerCart;
 }
 
@@ -66,10 +140,10 @@ const addToModal = () => {
                 <p class="textModal"> ${product.nameProduct}
                 </p>
                     <div class="secondContainerRow">
-                        <p class="amountProducts">Cantidad: ${product.cantidad}</p>
+                        <p class="amountProducts" id="cantidad-${product.id}">Cantidad: ${product.cantidad}</p>
                         <div class= "rowImgsCounter">
-                            <img src= "./images/signomenos.png" class="imgCounter" id="down">
-                            <img src= "./images/signo-suma2.png" class="imgCounter" id="up">
+                            <img src= "./images/signomenos.png" class="imgCounterMin" id="${product.id}">
+                            <img src= "./images/signo-suma2.png" class="imgCounter" id="${product.id}">
                         </div>
                     </div>
             </div>
@@ -101,12 +175,14 @@ const addToModal = () => {
                     let precioFinal = 0;
                     JSON.parse(localStorage.getItem(`cart`)).forEach((producto) => { precioFinal = precioFinal + producto.total });
                     localStorage.setItem(`precioFinal`, precioFinal);
-                    totalCartFunction()
+                    totalCartFunction(precioFinal);
                 }
             })
         })
     }
 }
+
+
 
 const addNew = (nameProduct, total, imagen, id) => {
     let newCart = []
@@ -122,7 +198,7 @@ const addNew = (nameProduct, total, imagen, id) => {
             })
         }
         if (!cartProduct.find((item) => item.nameProduct == nameProduct)) {
-            newCart.push({ cantidad: 1, nameProduct: nameProduct, total: total, imagen: imagen, id: id });
+            newCart.push({ cantidad: 1, precioUnitario: total, nameProduct: nameProduct, total: total, imagen: imagen, id: id });
         }
         localStorage.setItem(`cart`, JSON.stringify(newCart));
         return newCart;
