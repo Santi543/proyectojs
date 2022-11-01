@@ -31,7 +31,6 @@ register.addEventListener(`click`, () => {
             showConfirmButton: false,
             timer: 2000
         })
-        registerNav.style.display = 'none'
         $('#exampleModalCenter').modal('hide');
     } else {
         const textErrorUser = "<p class='errorModal'>Cuenta o contraseña incorrectas</p>"
@@ -59,20 +58,35 @@ login.addEventListener(`click`, () => {
     }
 })
 
-localStorage.getItem(`token`) ? registerNav.style.display = 'none' : null;
+/* localStorage.getItem(`token`) ? registerNav.style.display = 'none' : null; */
 
 
-// la funcion addToNav() es para agregarle al nav el mail del usuario pero sin el @ y todo lo que conlleva despues //
+const closeUser = document.getElementById('closeSession');
+const finished = document.getElementById('sesionFinished');
+
+finished.addEventListener('click', () => {
+    localStorage.clear();
+})
+
+const closeSession = () =>{
+    if (closeUser.style.display == "none" || !closeUser.style.display){
+        closeUser.style.display = "flex"
+    } else{
+        closeUser.style.display = "none"
+    }
+}
 
 const addToNav = () => {
     if (localStorage.getItem('token')) {
         const user = JSON.parse(localStorage.getItem('Users'));
-        const navVar = `<div class="containerForUser"><img class='logoUser' src='images/userNav.png'/>  <p class="textNav"> ${user.mail.split('@')[0].toUpperCase()} </p></div>`;
-        console.log("navbar:",navVar);
-        newBtnLogin.innerHTML = navVar 
+        const navVar = `<div class="containerForUser" onclick="closeSession()"><img class='logoUser' src='/public/userNav.png'/>  <p class="textNav"> ${user.mail.split('@')[0].toUpperCase()} </p></div>`;
+        newBtnLogin.innerHTML = navVar
     }
 }
 addToNav()
+
+
+
 
 
 

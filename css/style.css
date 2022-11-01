@@ -2034,9 +2034,9 @@ figure {
   width: 35%;
 }
 
-.containerLogo{
+/* .containerLogo{
   width: 40%;
-}
+} */
 
 .containerFather{
   display: flex;
@@ -2102,12 +2102,10 @@ figure {
   height: 20px;
 }
 
-.changeButtonLogin{
+#changeButtonLogin{
   display: flex;
-  flex-direction: column;
-  width: 50px;
+  flex-direction: row;
   justify-content: center;
-  margin-right: 100px;
 }
 
 .textNav{
@@ -2116,15 +2114,6 @@ figure {
   font-size: 13px;
   color: #000;
   margin-bottom: 0px;
-}
-
-#advertising img{
-  width: 250px;
-}
-
-#advertising{
-  justify-items: center;
-  align-items: center;
 }
 
 #headerCart{
@@ -2141,9 +2130,15 @@ figure {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .imgCounter{
+  width: 11px;
+  height: 11px;
+}
+
+.imgCounterMin{
   width: 11px;
   height: 11px;
 }
@@ -2170,6 +2165,31 @@ figure {
 
 .amountProducts{
   margin-bottom: 0px;
+}
+
+#advertising{
+  text-align: center;
+}
+
+#advertising img{
+  width: 250px;
+}
+
+#advertising h4{
+  margin-top: 30px;
+  font-size: 26px;
+}
+
+.cart{
+  margin-right: 50px;
+}
+
+#closeSession{
+  display: none;
+  position: relative;
+  z-index: 100;
+  left: 10px;
+  top: 10px;
 }
 
 /* .amountProducts{

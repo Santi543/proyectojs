@@ -17,28 +17,21 @@ const divHeaderModal = document.getElementById('headerCart');
 // /// //
 
 const buttonsQuantity = () => {
-    console.log(downCounter)
     if (downCounter != null || upCounter != null) {
         for (var i = 0; i < downCounter.length; i++) {
             downCounter[i].addEventListener('click', (e) => {
                 const cartForButtons = JSON.parse(localStorage.getItem('cart'));
-                console.log("cartForButtons:",cartForButtons)
                 const newCart = updateProductQuantity(e, "substraction", cartForButtons);
-                updateCartQuantityAndPrice(newCart)
-                console.log("newCart:",newCart)
-                localStorage.setItem('cart', JSON.stringify(newCart))
-                
+                updateCartQuantityAndPrice(newCart);
+                localStorage.setItem('cart', JSON.stringify(newCart));
             });
         }
         for (var i = 0; i < upCounter.length; i++) {
             upCounter[i].addEventListener('click', (e) => {
                 const cartForButtons = JSON.parse(localStorage.getItem('cart'));
-                console.log("cartForButtons:",cartForButtons)
                 const newCart = updateProductQuantity(e, "addition", cartForButtons);
-                updateCartQuantityAndPrice(newCart)
-                console.log("newCart:",newCart)
-                localStorage.setItem('cart', JSON.stringify(newCart))
-             
+                updateCartQuantityAndPrice(newCart);
+                localStorage.setItem('cart', JSON.stringify(newCart));
             });
         }
     }
@@ -46,13 +39,12 @@ const buttonsQuantity = () => {
 
 const updateProductQuantity = (event, type, cart) => {
     let newCart = [];
-    let producto = cart.find((item) => item.id == event.target.id)
-    console.log("Producto", producto)
-    if (type == "substraction"){
+    let producto = cart.find((item) => item.id == event.target.id);
+    if (type == "substraction") {
         producto.cantidad = producto.cantidad - 1
-       producto.total = producto.precioUnitario * producto.cantidad
-       const cantidadDiv = document.getElementById(`cantidad-${producto.id}`)
-       cantidadDiv.innerText = `Cantidad: ${producto.cantidad}`
+        producto.total = producto.precioUnitario * producto.cantidad
+        const cantidadDiv = document.getElementById(`cantidad-${producto.id}`)
+        cantidadDiv.innerText = `Cantidad: ${producto.cantidad}`
     } else if (type == "addition") {
         producto.cantidad = producto.cantidad + 1
         producto.total = producto.precioUnitario * producto.cantidad
@@ -91,8 +83,12 @@ cartImg.addEventListener(`click`, () => {
 
 for (var i = 0; i < shoppingButtons.length; i++) {
     shoppingButtons[i].addEventListener('click', (e) => {
-        comprarProducto(Number(e.target.id));
-        updateCartCounter();
+        if (localStorage.getItem(`token`) == `ariziochan`) {
+            comprarProducto(Number(e.target.id));
+            updateCartCounter();
+        } else{
+            $('#exampleModalCenter2').modal({ show: true });
+        }
     });
 }
 
@@ -135,15 +131,15 @@ const addToModal = () => {
     products?.map((product) => {
         modalVar = `${modalVar}
         <div class="containerProduct" id="${product.nameProduct}">
-         <img src= "./images/${product.imagen}" class="modalVar">
+         <img src= "/public/${product.imagen}" class="modalVar">
             <div class= "contModalCart">
                 <p class="textModal"> ${product.nameProduct}
                 </p>
                     <div class="secondContainerRow">
                         <p class="amountProducts" id="cantidad-${product.id}">Cantidad: ${product.cantidad}</p>
                         <div class= "rowImgsCounter">
-                            <img src= "./images/signomenos.png" class="imgCounterMin" id="${product.id}">
-                            <img src= "./images/signo-suma2.png" class="imgCounter" id="${product.id}">
+                            <img src= "/public/signomenos.png" class="imgCounterMin" id="${product.id}">
+                            <img src= "/public/signo-suma2.png" class="imgCounter" id="${product.id}">
                         </div>
                     </div>
             </div>
@@ -212,19 +208,15 @@ const comprarProducto = (selectProduct) => {
 
         case 1:
             cartProduct = addNew(`HAUTEVILLE CONCRETE ROCKING CHAIR`, 350, "product-1.jpg", 1);
-            desestructura(`HAUTEVILLE CONCRETE ROCKING CHAIR`);
             break;
         case 2:
             cartProduct = addNew("PAVILION SPEAKER", 600, "product-2.jpg", 2);
-            desestructura("PAVILION SPEAKER");
             break;
         case 3:
             cartProduct = addNew("LIGOMANCER", 780, "product-3.jpg", 3);
-            desestructura();
             break;
         case 4:
             cartProduct = addNew("ALATO CABINET", 800, "product-4.jpg", 4);
-            desestructura();
             break;
         case 5:
             cartProduct = addNew("EARING WIRELESS", 100, "product-5.jpg", 5);
@@ -247,14 +239,14 @@ const comprarProducto = (selectProduct) => {
     localStorage.setItem(`precioFinal`, precioFinal);
     Toastify({
         text: "Producto agregado al carrito ✔",
-        duration: 2000,
+        duration: 1200,
         newWindow: true,
         close: true,
         gravity: "top", // `top` or `bottom`
         position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
-            background: "white",
+            background: "#fcfbf2",
             color: "#8eb98e",
         },
     }).showToast();
@@ -272,37 +264,13 @@ fetch(`https://fakestoreapi.com/products/${numberRandom}`)
     .then(json => {
         const { title, price, image } = json
         const divAdvertising = `
-        <div class= "productAd">
+        <div class="productAd">
         <h2>${title}</h2>
         <img src="${image}"/>
-        <p> ${price}</p> 
+        <h4> $${price}</h4>
         </div>
         `
 
         document.getElementById('advertising').innerHTML = divAdvertising
     })
-
-
-// /// //
-
-// DESESTRUCTURACION PARA DESAFIO //
-
-
-const desestructura = () => {
-    let cartProduct = [];
-    cartProduct = JSON.parse(localStorage.getItem(`cart`));
-    const [a] = cartProduct
-    const { total } = a;
-    console.log(total);
-}
-
-
-
-/* const desestructura = (nameProduct) => {
-    let cartProduct = [];
-    cartProduct = JSON.parse(localStorage.getItem(`cart`));
-    let producto = cartProduct?.find((product) => nameProduct = product.nameProduct);
-    const {total} = producto;
-    console.log(total);
-} */
 
